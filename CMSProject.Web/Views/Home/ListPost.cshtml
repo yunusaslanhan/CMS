@@ -1,0 +1,30 @@
+﻿@model List<CMSProject.Common.Dtos.PostDto>
+@{
+    ViewData["Title"] = "ListPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="dynamicContent">
+
+    @Html.Partial("ListPostPartial", @Model)
+
+</div>
+
+
+<script type="text/javascript">
+    function DeletePage(postId) {
+
+        var deletePostId = postId;
+
+        $.ajax({
+            url: "/Home/DeletePost",
+            data: { 'PostId': deletePostId },
+            method: "POST",
+            success: function (response) {
+                alert("Post Silindi!!!");
+                $("#dynamicContent").html(response);
+            }
+        });
+    }
+</script>

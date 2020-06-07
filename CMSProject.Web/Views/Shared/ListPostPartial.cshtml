@@ -1,0 +1,56 @@
+﻿@model List<CMSProject.Common.Dtos.PostDto>
+@{
+    Layout = null;
+}
+@{ int id = 0;}
+<div class="col-md-12">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-comments"></i>Postlar
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="table-scrollable">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+
+                            <th> Post Başlık </th>
+                            <th> Açıklama </th>
+                            <th> Oluşturulma Zamanı</th>
+                            <th>Düzenle</th>
+                            <th>Sil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+
+
+
+                            <td> @item.PostTitle </td>
+                            <td> @item.PostDesc </td>
+                            <td> @item.CreateDate </td>
+                            <td><i class="fa fa-edit" style="color:blue"></i></td>
+                            <td onclick="DeletePage(@item.PostId)"><i class="fa fa-trash" style="color:red"></i></td>
+
+
+
+                        </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+</div>

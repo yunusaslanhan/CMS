@@ -1,0 +1,218 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-settings font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase"> Layout </span>
+        </div>
+
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown">
+                    Actions
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-pencil"></i> Edit
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-trash-o"></i> Delete
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-ban"></i> Ban
+                        </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
+                        <a href="javascript:;"> Make admin </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="portlet-body form">
+        <form role="form">
+            <div class="form-body">
+
+                <label control-label">Adı :</label>
+                <div>
+                    <input type="text" id="layoutName" name="layoutName" class="form-control" style="width:783px">
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <select class="form-control" id="mySelect" style="width:100px">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" onclick="AddDiv()">Eleman Ekle</button>
+                        <button type="button" class="btn btn-success" onclick="SaveAll()" style="margin-left:8px">Layoutu Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject font-dark sbold uppercase">Önizleme</span>
+        </div>
+        <div class="actions">
+            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
+                    <input type="radio" name="options" class="toggle" id="option1">Actions
+                </label>
+                <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
+                    <input type="radio" name="options" class="toggle" id="option2">Settings
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="portlet-body form">
+
+        <div class="form-body">
+            <div class="col-md-12" id="main">
+
+                <div class="row" id=".row">
+
+
+
+                </div>
+
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var id = 0;
+        function AddDiv() {
+
+            var value = document.getElementById('mySelect').value;
+
+            var div = document.createElement("div");
+
+            div.className = "col-md-" + value;
+
+
+            $(div).css({
+
+                'border': '1px solid green',
+                'height': '100px',
+                'backgraund': '#fafafa'
+
+            });
+            $(div).attr({
+
+                'id': 'divColumn' + '_' + id++,
+                'data-colSize': value
+
+
+            });
+
+
+            $(div).html('<div class="portlet light bordered" style="border:none!important;margin-bottom:0px;margin-top:10px" > <div class="portlet title">  <input type="text" class="form control input-small" placeholder="Adı" style="display:inline;width:77px!important;margin-left:-30px" />  </div ></div > ');
+
+
+
+
+            $('#main').children('.row').append(div);
+
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        var divList = [];
+
+        var obj = { Size: '', ComponentClass: '', Name: '' };
+
+
+        function SaveAll() {
+
+            $("#main").children('.row').find("div[class^='col-']").each(function () {
+
+                var Name = $(this).find('input[type=text]').val();
+               
+                $(this).removeAttr("style");
+                $(this).empty();
+
+                obj = {
+
+                    'Size': $(this).attr('data-colSize'),
+                    'ComponentClass': $(this)[0].outerHTML,
+                    'Name': Name
+                };
+                divList.push(obj);
+
+
+            });
+
+
+            var layoutName = $('#layoutName').val();
+            var layout = { Name: layoutName, layoutComponentDtos: divList };
+            console.log(layout);
+
+            $.ajax({
+
+                contentType: 'application/json',
+                datatype: 'json',
+                url: '/Home/SaveLayout',
+                method: 'post',
+                data: JSON.stringify(layout),
+                success: function (response) {
+                    if (response) {
+                        alert("Şablon başarıyla eklendi!!!");
+                        location.href = response;
+                    }
+
+                }
+
+
+            });
+
+
+
+
+        }
+
+
+
+    </script>

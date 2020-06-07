@@ -1,0 +1,18 @@
+﻿@model List<CMSProject.Common.Dtos.PostDetailDto>
+@{
+    ViewData["Title"] = "PostDetailPage";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row" style="margin-top:4%;background-color:white;margin-bottom:2%">
+
+      @foreach (var item in Model)
+      {
+         @Html.Raw(@item.PostHtml)
+      }
+
+
+    </div>
+</div>
+

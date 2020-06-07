@@ -1,0 +1,47 @@
+﻿@model List<CMSProject.Common.Dtos.MainPageDto>
+@{
+    Layout = null;
+}
+
+<label style="margin-left:1%" class="col-md-2 control-label">Main Page Listesi :</label>
+<div style="margin-left:-2%" class="col-md-5">
+    <select id="selectItem" class="form-control">
+
+        <option value="0">Anasayfa</option>
+        @foreach (var item in Model)
+        {
+
+            <option value="@item.Id">@item.Name</option>
+        }
+
+    </select>
+</div>
+
+<button style="margin-left:25.1%" type="submit" class="btn green" onclick="AddPage()">Page Ekle</button>
+
+<br /><br /><br /><br />
+<div class="page-header navbar">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="/User/Index">
+                <img src="/assets/layouts/layout/img/logo.png" alt="logo" class="logo-default">
+            </a>
+
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <div class="hor-menu hidden-sm hidden-xs">
+            <ul class="nav navbar-nav">
+                @Html.Raw(ViewBag.Menu)
+            </ul>
+        </div>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+
+

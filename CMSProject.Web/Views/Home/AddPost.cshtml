@@ -1,0 +1,132 @@
+﻿@model CMSProject.Common.Dtos.LayoutDto
+@{
+    ViewData["Title"] = "AddPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-settings font-dark"></i>
+                <span class="caption-subject font-dark sbold uppercase">Post</span>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
+                        <input type="radio" name="options" class="toggle" id="option1">Actions
+                    </label>
+                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
+                        <input type="radio" name="options" class="toggle" id="option2">Settings
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">MainPage Listesi :</label>
+                        <div class="col-md-9">
+                            <select id="selectItemMainPage" class="form-control">
+                                @foreach (var item in Model.mainPageDtos)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Post Başlık :</label>
+                        <div class="col-md-9">
+                            <input type="text" id="postTitle" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Açıklama :</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" id="postDescription" rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                   
+                        <div class="form-group" style="margin-left:172px;">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                        <span class="fileinput-new"> Resim Yükle </span>
+                                        <span class="fileinput-exists"> Değiştir </span>
+                                        <input type="hidden" value="" name="..."><input type="file" id="pic" name="pic">
+                                    </span>
+                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Sil </a>
+                                </div>
+                            </div>
+                           
+                        </div>
+                       
+                 
+
+
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Layout Listesi :</label>
+                        <div class="col-md-9">
+                            <select id="selectItem" class="form-control">
+                                @foreach (var item in Model.layoutDtos)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+
+
+                            </select>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </form>
+
+            <button style="margin-left:81.75%" type="submit" class="btn green" onclick="GetLayout()">Layout Seç</button>
+
+           
+        </div>
+
+    </div>
+</div>
+
+<div id="dynamicContent">
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function GetLayout() {
+        var layoutId = $('#selectItem').val();
+        $.ajax({
+            url: "/Home/LayoutDesign",
+            data: { 'LayoutId': layoutId },
+            method: "POST",
+            success: function (response) {
+                $("#dynamicContent").html(response);
+            }
+        });
+    }
+</script>

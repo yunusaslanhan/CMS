@@ -1,0 +1,143 @@
+﻿@model CMSProject.Common.Dtos.LayoutDto
+@{
+    Layout = null;
+}
+
+    @{int id = 0; }
+    @foreach (var item in Model.layoutComponentDtos)
+    {
+
+        <h2>@item.Name</h2>
+        <input id="ClassSize@(++id)" type="hidden" value="@item.Size" />
+
+        <div class="summernote" id="summerNote_@(id)">
+
+
+
+
+        </div>
+
+    }
+
+
+<input id="allDivCount" type="hidden" value="@Model.layoutComponentDtos.Count" />
+<div style="text-align:center">
+    <button type="button" class="btn btn-primary" onclick="PreviewPost()">Önizle</button>
+</div>
+
+
+
+<div class="modal fade in" id="previewModal" tabindex="-1" role="basic" aria-hidden="true" style="padding-right: 17px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Post Önizleme</h4>
+            </div>
+            <div class="modal-body" id="previewModalBody" style="overflow-y: auto">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">İptal</button>
+                <button type="button" class="btn green" onclick="SavePost()">Kaydet</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+
+            tabsize: 2,
+            height: 100
+
+        });
+
+    });
+</script>
+
+
+
+<script>
+    var list = [];
+    var divCount = document.getElementById("allDivCount").value;
+
+
+    function SavePost() {
+      
+        $.ajax({
+            url: "/Home/SavePage",
+            type: "post",
+            success: function (response) {
+
+                alert("Post başarıyla kaydedildi.");
+                location.href = "/Home/AddPost";
+            }
+
+        });
+
+    }
+    function PreviewPost() {
+
+        FillPostContent();
+
+        var formData = new FormData();
+
+        var obj = {
+            PostDesc: $("#postDescription").val(),
+            PostTitle: $("#postTitle").val(),
+            postDetailDtos: list,
+            LayoutId: $("#selectItem").val(),
+            MainPageId: $("#selectItemMainPage").val()
+        };
+
+
+        var inputFile = $("#pic")[0].files[0];
+        formData.append('pageDto', JSON.stringify(obj));
+        formData.append('inputPic', inputFile);
+        if ($("#postDescription").val() == "" || $("#postTitle").val() == "" || inputFile == null) {
+            alert("Please fill in all fields");
+        }
+
+
+        $.ajax({
+            //contentType: "application/json",
+            //dataType: "json",
+            //data: JSON.stringify(obj),
+            contentType: false,
+            processData: false,
+            data: formData,
+            url: "/Home/PreviewPage",
+            type: "post",
+            success: function (response) {
+                document.getElementById('previewModalBody').innerHTML = "";
+                $("#previewModalBody").html(response);
+                $("#previewModal").appendTo("body").modal('show');
+                list = [];
+            }
+
+
+
+        });
+
+    }
+
+
+        
+    function FillPostContent() {
+        for (var a = 1; a <= divCount; a++) {
+            var obje = { PostHtml: "" };
+            var content = "<div class=col-md-"+
+                parseInt($("#ClassSize" + a).val()) +
+                "\>" +
+                $("#summerNote_" + a).summernote('code') +
+                "</div>";
+            
+            obje = { PostHtml: content };
+            list.push(obje);
+        }
+    }
+
+</script>

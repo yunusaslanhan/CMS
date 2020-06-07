@@ -1,0 +1,9 @@
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\bin\Debug\netcoreapp2.1\CMSProject.Common.deps.json
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\bin\Debug\netcoreapp2.1\CMSProject.Common.dll
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\bin\Debug\netcoreapp2.1\CMSProject.Common.pdb
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.csproj.CoreCompileInputs.cache
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.AssemblyInfoInputs.cache
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.AssemblyInfo.cs
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.dll
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.pdb
+C:\Users\Yunus\source\repos\CMSProject\CMSProject.Common\obj\Debug\netcoreapp2.1\CMSProject.Common.csprojAssemblyReference.cache

@@ -1,0 +1,90 @@
+﻿@model CMSProject.Common.Dtos.PostDto
+@{
+    ViewData["Title"] = "AddSlider";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-settings font-dark"></i>
+                <span class="caption-subject font-dark sbold uppercase">Slider</span>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
+                        <input type="radio" name="options" class="toggle" id="option1">Actions
+                    </label>
+                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
+                        <input type="radio" name="options" class="toggle" id="option2">Settings
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+                    <div class="form-group">
+                        
+                        <label style="margin-left:1%" class="col-md-2 control-label">Post Listesi :</label>
+                        <div style="margin-left:-2%" class="col-md-5">
+                            <select id="selectItem" class="form-control">
+
+                                @foreach (var item in Model.postDtos)
+                                {
+
+                                    <option value="@item.PostId">@item.PostTitle</option>
+                                }
+
+                            </select>
+                        </div>
+                        <button style="margin-left:5%" type="button" class="btn green" onclick="AddSlider()">Slider Ekle</button>
+                    </div>
+
+
+
+                </div>
+
+            </form>
+            <div id="dynamicContent">
+                @Html.Partial("SliderPartial", @Model.sliderDtos)
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function AddSlider() {
+        var postId = $('#selectItem').val();
+       
+        $.ajax({
+            url: "/Home/AddSliderForAjax",
+            data: { 'PostId': postId },
+            method: "POST",
+            success: function (response) {
+                alert("Slider Başarıyla Eklendi!!!");
+                $("#dynamicContent").html(response);
+            }
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+    function DeleteSlider(postImageId) {
+
+        var deletePostIamageId = postImageId;
+
+        $.ajax({
+            url: "/Home/DeleteSlider",
+            data: { 'PostImageId': deletePostIamageId },
+            method: "POST",
+            success: function (response) {
+                alert("Slider Silindi!!!");
+                $("#dynamicContent").html(response);
+            }
+        });
+    }
+</script>
